@@ -1,7 +1,7 @@
 .classpath
 .idea/
-.projet
 .settings/
 bin/
 tp4.iml
 .project
+src/.vscode
