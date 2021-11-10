@@ -2,7 +2,7 @@ package tp4;
 
 public interface PreviousInterface {
 	
-	public VertexInterface Pere(VertexInterface v); //Retourne le père de v dans un chemin optimal
+	public VertexInterface Pere(VertexInterface v); //Retourne le pÃ¨re de v dans un chemin optimal
 	
-	public void Rewrite(VertexInterface v1, VertexInterface v2); //Met le père de v1 à la valeur v2
+	public void Rewrite(VertexInterface v1, VertexInterface v2); //Met le pÃ¨re de v1 Ã  la valeur v2
 }
