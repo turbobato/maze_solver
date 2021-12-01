@@ -1,4 +1,4 @@
-package api;
+package interfaces;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,6 @@ public interface GraphInterface {
 	
 	public int GetCount(); //Donne le nombre de sommets 
 
-	public ArrayList<VertexInterface> GetVertexes(); //Donne tous les sommets du graphe
+	public ArrayList<VertexInterface> GetVerticies(); //Donne tous les sommets du graphe
 	
 }

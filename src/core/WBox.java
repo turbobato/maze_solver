@@ -2,9 +2,11 @@ package core;
 
 public class WBox extends MBox {
 
-    WBox(int x, int y, Maze maze) {
-        super(x, y, maze);
-        //TODO Auto-generated constructor stub
+    public WBox(int x, int y, Maze maze, String label) {
+        super(x, y, maze, "W");
     }
-    
+    @Override
+    public boolean isWall(){
+        return true;
+    }
 }

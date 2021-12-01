@@ -1,4 +1,4 @@
-package api;
+package interfaces;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class Dijksta {
 		int j = 1;
 		while (j<g.GetCount()){
 			ArrayList<VertexInterface> voisins = g.Neighbours(pivot);
-			ArrayList<VertexInterface> sommets = g.GetVertexes();
+			ArrayList<VertexInterface> sommets = g.GetVerticies();
 			for(VertexInterface v : voisins){
 				if (!a.isInSet(v)) {
 					if (pi.DonnePi(pivot)+g.GetWeight(pivot,v)<pi.DonnePi(v)){
