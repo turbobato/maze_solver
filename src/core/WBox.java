@@ -2,7 +2,7 @@ package core;
 
 public class WBox extends MBox {
 
-    public WBox(int x, int y, Maze maze, String label) {
+    public WBox(int x, int y, Maze maze) {
         super(x, y, maze, "W");
     }
     @Override
