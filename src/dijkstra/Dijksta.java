@@ -4,10 +4,17 @@ import java.util.ArrayList;
 
 public class Dijksta {
 	
+	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r){
+		PiInterface pi = new Pi(g);
+		ASetInterface a = new ASet();
+		PreviousInterface previous= new Previous();
+		return dijkstra(g, r, a, pi, previous);
+	}
+
 	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi, PreviousInterface previous) {
 		a.Add(r);
 		VertexInterface pivot = r;
-		pi.InitialisePi(g, r);
+		pi.InitialisePi(r);
 		int j = 1;
 		while (j<g.GetCount()){
 			ArrayList<VertexInterface> voisins = g.Neighbours(pivot);

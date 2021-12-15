@@ -11,19 +11,14 @@ public class Maze implements GraphInterface {
     private ArrayList<ArrayList<VertexInterface>> boxes;
     private int lines;
     private int columns;
+    private DBox departure;
+    private ABox arrival;
 
     public Maze() { // initialise un labyrinthe vide (pour plus tard l'initialiser avec un fichier
                     // texte par exemple)
         this.boxes = null;
         lines = 0;
         columns = 0;
-    }
-
-    public Maze(ArrayList<ArrayList<VertexInterface>> boxes) { // initialise un labyrinthe à partir de la liste de ses
-                                                               // boxes
-        this.boxes = boxes;
-        lines = boxes.size();
-        columns = boxes.get(0).size();
     }
 
     public Maze(String fileName) throws MazeReadingException { // initialise le labyrinthe à partir d'un fichier texte
@@ -64,6 +59,22 @@ public class Maze implements GraphInterface {
 
     public void setColumns(int columns) {
         this.columns = columns;
+    }
+
+    public VertexInterface getDeparture(){
+        return departure;
+    }
+
+    public VertexInterface getArrival(){
+        return arrival;
+    }
+
+    public void setDeparture(VertexInterface departure){
+        this.departure = (DBox) departure;
+    }
+
+    public void setArrival(VertexInterface arrival){
+        this.arrival = (ABox) arrival;
     }
 
     public ArrayList<VertexInterface> GetVerticies() { // renvoie la liste de toutes les boxes
@@ -133,15 +144,27 @@ public class Maze implements GraphInterface {
                                                                        // ligne
             }
             is = new BufferedReader(new FileReader(fileName));
+            int DCount = 0; // on va compter le nombre de D (il faut qu'il n'y en ait qu'un...)
+            int ACount = 0; // pareil pour A
             for (int i = 0; i < lines; i++) {
                 String line = is.readLine();
                 for (int j = 0; j < columns; j++) {
                     char caractere = line.charAt(j);
-                    if (caractere == 'D')
-                        setBox(i, j, new DBox(i, j, this));
-                    else if (caractere == 'A')
-                        setBox(i, j, new ABox(i, j, this));
-                    else if (caractere == 'W')
+                    if (caractere == 'D') { 
+                        if (DCount == 0) {
+                            setBox(i, j, new DBox(i, j, this));
+                            setDeparture(getBox(i, j)); // on récupère le départ
+                            DCount++; 
+                        } else
+                            throw new MazeReadingException(fileName, i, "Il y a plus d'un départ"); //on a lu plus d'une fois le symbole D
+                    } else if (caractere == 'A') {
+                        if (ACount == 0) {
+                            setBox(i, j, new ABox(i, j, this));
+                            setArrival(getBox(i, j));  // on récupère l'arrivée
+                            ACount++;
+                        } else
+                            throw new MazeReadingException(fileName, i, "Il y a plus d'une arrivée"); //on a lu plus d'une fois le symbole A
+                    } else if (caractere == 'W')
                         setBox(i, j, new WBox(i, j, this));
                     else if (caractere == 'E')
                         setBox(i, j, new EBox(i, j, this));
@@ -149,6 +172,10 @@ public class Maze implements GraphInterface {
                         throw new MazeReadingException(fileName, i,
                                 "Un caractère invalide (différent de D A W E) a été lu");
                     }
+                }
+                if (ACount != 1 || DCount != 1) { //il faut vérifier qu'on a lu exactement un départ et exactement une arrivée
+                    throw new MazeReadingException(fileName, lines,
+                            "La lecture s'est terminée et il manque un départ ou une arrivée");
                 }
             }
         } catch (IOException e) {
@@ -167,15 +194,16 @@ public class Maze implements GraphInterface {
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(fileName);
-            for (int i = 0; i < lines-1; i++) {
+            for (int i = 0; i < lines - 1; i++) {
                 for (int j = 0; j < columns; j++) {
                     pw.print(getBox(i, j).GetLabel());
                 }
                 pw.println();
             }
             for (int j = 0; j < columns; j++) {
-                pw.print(getBox(lines-1, j).GetLabel()); //on traite à partle cas de la dernière ligne (pour ne pas avoir un println en trop)
-            }   
+                pw.print(getBox(lines - 1, j).GetLabel()); // on traite à partle cas de la dernière ligne (pour ne pas
+                                                           // avoir un println en trop)
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
