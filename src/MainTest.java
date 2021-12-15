@@ -1,4 +1,5 @@
-package core;
+import maze.*;
+import dijkstra.*;
 
 public class MainTest {
     

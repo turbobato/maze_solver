@@ -1,10 +1,10 @@
-package core;
+package maze;
 
 import java.util.ArrayList;
 import java.io.*;
 
-import interfaces.GraphInterface;
-import interfaces.VertexInterface;
+import dijkstra.GraphInterface;
+import dijkstra.VertexInterface;
 
 public class Maze implements GraphInterface {
 
