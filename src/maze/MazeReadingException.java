@@ -3,15 +3,15 @@ package core;
 public class MazeReadingException extends Exception {
     
     private final String fileName;
-    private final String Message;
+    private final String ErrorMessage;
     private final int line;
 
 
-    public MazeReadingException(String fileName, int line, String Message){
-        super(Message + "à la ligne " + line + "du fichier :" + fileName );
+    public MazeReadingException(String fileName, int line, String ErrorMessage){
+        super(ErrorMessage + " à la ligne " + line + " du fichier : " + fileName );
         this.fileName = fileName;
         this.line = line;
-        this.Message=Message;
+        this.ErrorMessage=ErrorMessage;
     }
 
     public String getFileName(){
@@ -22,7 +22,7 @@ public class MazeReadingException extends Exception {
         return line;
     }
 
-    public String getMessage(){
-        return Message;
+    public String getErrorMessage(){
+        return ErrorMessage;
     }
 }
