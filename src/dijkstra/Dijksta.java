@@ -28,7 +28,7 @@ public class Dijksta {
 				}
 
 			}
-			int min=0;
+			int min=Integer.MAX_VALUE;
 			VertexInterface prochain=pivot;
 			for (VertexInterface v : sommets){
 				if (!a.isInSet(v)){
