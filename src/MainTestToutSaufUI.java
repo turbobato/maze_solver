@@ -15,7 +15,7 @@ public class MainTestToutSaufUI {
         PreviousInterface previous = Dijksta.dijkstra(maze, departure);
         HashSet<VertexInterface> chemin = new HashSet<VertexInterface>();
         VertexInterface v = arrival;
-        while(previous.Pere(v)!=departure) {
+        while(v!=departure) {
             chemin.add(v);
             v = previous.Pere(v);
         }
