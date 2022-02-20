@@ -1,28 +1,27 @@
 package maze;
 
-public class MazeReadingException extends Exception {
-    
+public final class MazeReadingException extends Exception {
+
     private final String fileName;
     private final String ErrorMessage;
     private final int line;
 
-
-    public MazeReadingException(String fileName, int line, String ErrorMessage){
-        super(ErrorMessage + " à la ligne " + line + " du fichier : " + fileName );
+    public MazeReadingException(String fileName, int line, String ErrorMessage) {
+        super(ErrorMessage + " at the line " + line + " of file : " + fileName);
         this.fileName = fileName;
         this.line = line;
-        this.ErrorMessage=ErrorMessage;
+        this.ErrorMessage = ErrorMessage;
     }
 
-    public String getFileName(){
+    public String getFileName() {
         return fileName;
     }
 
-    public int getLine(){
+    public int getLine() {
         return line;
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         return ErrorMessage;
     }
 }

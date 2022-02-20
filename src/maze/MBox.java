@@ -2,35 +2,35 @@ package maze;
 
 public abstract class MBox implements dijkstra.VertexInterface {
 
-    private int x;
-    private int y;
-    private Maze maze;
-    private String label;
+    private final int x;
+    private final int y;
+    private final Maze maze;
+    private final String label;
 
-    public MBox(int x, int y, Maze maze, String label){
-        this.x=x;
-        this.y=y;
-        this.maze=maze;
-        this.label=label;
+    public MBox(int x, int y, Maze maze, String label) {
+        this.x = x;
+        this.y = y;
+        this.maze = maze;
+        this.label = label;
     }
-    
-    public final int GetX(){
+
+    public final int getX() {
         return x;
     }
-    
-    public final int GetY(){
+
+    public final int getY() {
         return y;
     }
 
-    public final String GetLabel(){
+    public final String getLabel() {
         return label;
     }
 
-    public boolean isWall(){
-        return false;    
+    public boolean isWall() {
+        return false;
     }
-    
-    public boolean isNeighbour(MBox b){ //renvoie true si b est un voisin direct, false sinon
-        return(maze.Neighbours(this).contains(b));
-    } 
+
+    public final boolean isNeighbour(MBox b) { // renvoie true si b est un voisin direct, false sinon
+        return (maze.neighbours(this).contains(b));
+    }
 }

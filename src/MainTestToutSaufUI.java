@@ -7,36 +7,32 @@ import dijkstra.*;
 
 public class MainTestToutSaufUI {
 
-    public static void main(String[] args) throws MazeReadingException, IOException {
+    public static void main(String[] args) throws MazeReadingException {
 
         Maze maze = new Maze("data/maze.txt");
-        DBox departure = (DBox)maze.getDeparture();
-        ABox arrival = (ABox)maze.getArrival();
+        DBox departure = (DBox) maze.getDeparture();
+        ABox arrival = (ABox) maze.getArrival();
         PreviousInterface previous = Dijksta.dijkstra(maze, departure);
-        HashSet<VertexInterface> chemin = new HashSet<VertexInterface>();
+        HashSet<VertexInterface> path = new HashSet<VertexInterface>();
         VertexInterface v = arrival;
-        while(v!=departure) {
-            chemin.add(v);
-            v = previous.Pere(v);
+        while (v != departure && v != null) {
+            path.add(v);
+            v = previous.father(v);
+            if (v == null) {
+                System.out.println("This labyrinth has no solution");
+            }
         }
-        for (int i = 0; i < maze.getLines() - 1; i++) {
+        for (int i = 0; i < maze.getLines(); i++) {
             for (int j = 0; j < maze.getColumns(); j++) {
-                if(chemin.contains(maze.getBox(i,j))) {
+                if (path.contains(maze.getBox(i, j))) {
                     System.out.print(".");
-                }
-                else {
-                    System.out.print(maze.getBox(i, j).GetLabel());
+                } else {
+                    System.out.print(maze.getBox(i, j).getLabel());
                 }
             }
-            System.out.println();
-        }
-        for (int j = 0; j < maze.getColumns(); j++) {
-            if(chemin.contains(maze.getBox(maze.getLines()-1,j))) {
-                System.out.print(".");
-            }
-            else {
-                System.out.print(maze.getBox(maze.getLines()-1, j).GetLabel());
+            if (i != maze.getLines() - 1) {
+                System.out.println();
             }
         }
-    }       
-}   
+    }
+}

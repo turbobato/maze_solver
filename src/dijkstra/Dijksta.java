@@ -2,42 +2,43 @@ package dijkstra;
 
 import java.util.ArrayList;
 
-public class Dijksta {
-	
-	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r){
+public final class Dijksta {
+
+	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
 		PiInterface pi = new Pi(g);
 		ASetInterface a = new ASet();
-		PreviousInterface previous= new Previous();
+		PreviousInterface previous = new Previous();
 		return dijkstra(g, r, a, pi, previous);
 	}
 
-	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi, PreviousInterface previous) {
+	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi,
+			PreviousInterface previous) {
 		a.Add(r);
 		VertexInterface pivot = r;
-		pi.InitialisePi(r);
+		pi.initializePi(r);
 		int j = 1;
-		while (j<g.GetCount()){
-			ArrayList<VertexInterface> voisins = g.Neighbours(pivot);
-			ArrayList<VertexInterface> sommets = g.GetVerticies();
-			for(VertexInterface v : voisins){
+		while (j < g.getCount()) {
+			ArrayList<VertexInterface> neighbours = g.neighbours(pivot);
+			ArrayList<VertexInterface> verticies = g.getVerticies();
+			for (VertexInterface v : neighbours) {
 				if (!a.isInSet(v)) {
-					if (pi.DonnePi(pivot)+g.GetWeight(pivot,v)<pi.DonnePi(v)){
-						pi.EcritPi(v,pi.DonnePi(pivot)+g.GetWeight(pivot,v));
-						previous.Rewrite(v,pivot);
+					if (pi.getPi(pivot) + g.getWeight(pivot, v) < pi.getPi(v)) {
+						pi.writePi(v, pi.getPi(pivot) + g.getWeight(pivot, v));
+						previous.rewrite(v, pivot);
 					}
 				}
 
 			}
-			int min=Integer.MAX_VALUE;
-			VertexInterface prochain=pivot;
-			for (VertexInterface v : sommets){
-				if (!a.isInSet(v)){
-					if (pi.DonnePi(v)<min){
-						prochain=v;
+			int min = Integer.MAX_VALUE;
+			VertexInterface next = pivot;
+			for (VertexInterface v : verticies) {
+				if (!a.isInSet(v)) {
+					if (pi.getPi(v) < min) {
+						next = v;
 					}
 				}
 			}
-			pivot=prochain;
+			pivot = next;
 			a.Add(pivot);
 			j++;
 		}

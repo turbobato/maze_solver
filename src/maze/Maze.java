@@ -25,11 +25,11 @@ public class Maze implements GraphInterface {
         initFromTextFile(fileName);
     }
 
-    public boolean isInMaze(int x, int y) { // regarde si la case d'indice (x,y) est dans le labyrinthe
-        return ((x < lines) && (y < columns)&& (x>=0)&&(y>=0));
+    public final boolean isInMaze(int x, int y) { // regarde si la case d'indice (x,y) est dans le labyrinthe
+        return ((x < lines) && (y < columns) && (x >= 0) && (y >= 0));
     }
 
-    public VertexInterface getBox(int i, int j) throws MazeOutOfBoundsException { // renvoie la box en position (i, j)
+    public final VertexInterface getBox(int i, int j) throws MazeOutOfBoundsException { // renvoie la box en position (i, j)
         if (isInMaze(i, j)) {
             return boxes.get(i).get(j);
         } else
@@ -37,7 +37,7 @@ public class Maze implements GraphInterface {
 
     }
 
-    public void setBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException { // change la box à la
+    public final void setBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException { // change la box à la
                                                                                             // position (i, j)
         if (isInMaze(i, j)) {
             boxes.get(i).add(j, box);
@@ -45,54 +45,55 @@ public class Maze implements GraphInterface {
             throw new MazeOutOfBoundsException();
     }
 
-    public int getLines() { // renvoie le nombre de lignes
+    public final int getLines() { // renvoie le nombre de lignes
         return lines;
     }
 
-    public void setLines(int lines) { // change la valeur du nombre de lignes
+    public final void setLines(int lines) { // change la valeur du nombre de lignes
         this.lines = lines;
     }
 
-    public int getColumns() { // renvoie le nombre de colonnes
+    public final int getColumns() { // renvoie le nombre de colonnes
         return columns;
     }
 
-    public void setColumns(int columns) { // change la valeur du nombre de colonnes
+    public final void setColumns(int columns) { // change la valeur du nombre de colonnes
         this.columns = columns;
     }
 
-    public VertexInterface getDeparture() { // renvoie la case départ
+    public final VertexInterface getDeparture() { // renvoie la case départ
         return departure;
     }
 
-    public VertexInterface getArrival() { // renvoie la case arrivée
+    public final VertexInterface getArrival() { // renvoie la case arrivée
         return arrival;
     }
 
-    public void setDeparture(VertexInterface departure) { // change la case départ
+    public final void setDeparture(VertexInterface departure) { // change la case départ
         this.departure = (DBox) departure;
     }
 
-    public void setArrival(VertexInterface arrival) { // change la case arrivée
+    public final void setArrival(VertexInterface arrival) { // change la case arrivée
         this.arrival = (ABox) arrival;
     }
 
-    public ArrayList<VertexInterface> GetVerticies() { // renvoie la liste de toutes les boxes
-        ArrayList<VertexInterface> AllVerticies = new ArrayList<VertexInterface>();
+    public final ArrayList<VertexInterface> getVerticies() { // renvoie la liste de toutes les boxes
+        ArrayList<VertexInterface> allVerticies = new ArrayList<VertexInterface>();
         for (int i = 0; i < getLines(); i++) {
             for (int j = 0; j < getColumns(); j++) {
-                AllVerticies.add(getBox(i, j));
+                allVerticies.add(getBox(i, j));
             }
         }
-        return AllVerticies;
+        return allVerticies;
     }
 
-    public int GetCount() { // renvoie le nombre de cases dans le labyrinthe
+    public final int getCount() { // renvoie le nombre de cases dans le labyrinthe
         return lines * columns;
     }
 
-    public int GetWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut aller
-                                                                   // d'une case à l'autre, +infty sinon)
+    public final int getWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut
+                                                                         // aller
+        // d'une case à l'autre, +infty sinon)
         MBox b1 = (MBox) v1, b2 = (MBox) v2;
         if (b1.isNeighbour(b2)) {
             return 1;
@@ -101,35 +102,35 @@ public class Maze implements GraphInterface {
         }
     }
 
-    public ArrayList<VertexInterface> Neighbours(VertexInterface v) { // renvoie la liste des voisins de v
+    public final ArrayList<VertexInterface> neighbours(VertexInterface v) { // renvoie la liste des voisins de v
         MBox b = (MBox) v;
-        int x = b.GetX(), y = b.GetY();
-        ArrayList<VertexInterface> resultat = new ArrayList<VertexInterface>();
-        if (isInMaze(x-1, y)) { 
-            MBox candidate = (MBox) getBox(x-1, y); // potentiel voisin, reste à vérifier s'il est un mur
+        int x = b.getX(), y = b.getY();
+        ArrayList<VertexInterface> result = new ArrayList<VertexInterface>();
+        if (isInMaze(x - 1, y)) {
+            MBox candidate = (MBox) getBox(x - 1, y); // potentiel voisin, reste à vérifier s'il est un mur
             if (!candidate.isWall()) {
-               resultat.add(candidate);
+                result.add(candidate);
             }
         }
-        if (isInMaze(x+1, y)) { 
-            MBox candidate = (MBox) getBox(x+1, y); // potentiel voisin, reste à vérifier s'il est un mur
+        if (isInMaze(x + 1, y)) {
+            MBox candidate = (MBox) getBox(x + 1, y); // potentiel voisin, reste à vérifier s'il est un mur
             if (!candidate.isWall()) {
-               resultat.add(candidate);
+                result.add(candidate);
             }
         }
-        if (isInMaze(x, y-1)) { 
-            MBox candidate = (MBox) getBox(x, y-1); // potentiel voisin, reste à vérifier s'il est un mur
+        if (isInMaze(x, y - 1)) {
+            MBox candidate = (MBox) getBox(x, y - 1); // potentiel voisin, reste à vérifier s'il est un mur
             if (!candidate.isWall()) {
-               resultat.add(candidate);
+                result.add(candidate);
             }
         }
-        if (isInMaze(x, y+1)) { 
-            MBox candidate = (MBox) getBox(x, y+1); // potentiel voisin, reste à vérifier s'il est un mur
+        if (isInMaze(x, y + 1)) {
+            MBox candidate = (MBox) getBox(x, y + 1); // potentiel voisin, reste à vérifier s'il est un mur
             if (!candidate.isWall()) {
-               resultat.add(candidate);
+                result.add(candidate);
             }
         }
-        return resultat;
+        return result;
     }
 
     public final void initFromTextFile(String fileName)
@@ -171,7 +172,7 @@ public class Maze implements GraphInterface {
                             setDeparture(getBox(i, j)); // on récupère le départ
                             DCount++;
                         } else
-                            throw new MazeReadingException(fileName, i, "Il y a plus d'un départ"); // on a lu plus
+                            throw new MazeReadingException(fileName, i, "There is more than one departure"); // on a lu plus
                                                                                                     // d'une fois le
                                                                                                     // symbole D
                     } else if (caractere == 'A') {
@@ -180,7 +181,7 @@ public class Maze implements GraphInterface {
                             setArrival(getBox(i, j)); // on récupère l'arrivée
                             ACount++;
                         } else
-                            throw new MazeReadingException(fileName, i, "Il y a plus d'une arrivée"); // on a lu plus
+                            throw new MazeReadingException(fileName, i, "There is more than one arrival"); // on a lu plus
                                                                                                       // d'une fois le
                                                                                                       // symbole A
                     } else if (caractere == 'W')
@@ -189,15 +190,15 @@ public class Maze implements GraphInterface {
                         setBox(i, j, new EBox(i, j, this));
                     else {
                         throw new MazeReadingException(fileName, i,
-                                "Un caractère invalide (différent de D A W E) a été lu");
+                                "An invalid character (different from A E D W) has been encountered");
                     }
                 }
             }
             if (ACount != 1 || DCount != 1) { // il faut vérifier qu'on a lu exactement un départ et exactement une
-                                                  // arrivée
-                    throw new MazeReadingException(fileName, lines,
-                            "La lecture s'est terminée et il manque un départ ou une arrivée");
-                }
+                                              // arrivée
+                throw new MazeReadingException(fileName, lines,
+                        "THe files lacks a departure or an arrival");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -214,15 +215,13 @@ public class Maze implements GraphInterface {
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(fileName);
-            for (int i = 0; i < lines - 1; i++) {
+            for (int i = 0; i < lines; i++) {
                 for (int j = 0; j < columns; j++) {
-                    pw.print(getBox(i, j).GetLabel());
+                    pw.print(getBox(i, j).getLabel());
                 }
-                pw.println();
-            }
-            for (int j = 0; j < columns; j++) {
-                pw.print(getBox(lines - 1, j).GetLabel()); // on traite à partle cas de la dernière ligne (pour ne pas
-                                                           // avoir un println en trop)
+                if (i != lines - 1) {
+                    pw.println();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

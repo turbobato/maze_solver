@@ -2,17 +2,17 @@ package dijkstra;
 
 import java.util.HashSet;
 
-public class ASet extends HashSet<VertexInterface> implements ASetInterface {
-    
-    public ASet(){
+public final class ASet extends HashSet<VertexInterface> implements ASetInterface {
+
+    public ASet() {
         super();
     }
 
-    public void Add(VertexInterface sommet){
-        super.add(sommet);
+    public void Add(VertexInterface v) {
+        super.add(v);
     }
 
-    public boolean isInSet(VertexInterface sommet){
-        return super.contains(sommet);
+    public boolean isInSet(VertexInterface v) {
+        return super.contains(v);
     }
 }
