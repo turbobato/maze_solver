@@ -5,20 +5,22 @@ import java.awt.*;
 
 public final class ButtonsPanel extends JPanel {
     
-    private final MazeButton loadButton;
-    private final MazeButton saveButton;
-    private final MazeButton editMaze;
+    private final CreateMaze createMaze;
+    private final LoadMaze loadMaze;
+    private final SaveMaze saveMaze;
+    private final EditMaze editMaze;
+    private final EditEnable editEnable;
     private final MazeButton solveMaze;
-    private final MazeButton exitMaze;
 
     public ButtonsPanel(MazeApp mazeApp){
         super();
-        setLayout(new GridLayout(5,1));
-        add(loadButton = new MazeButton("Load from file", mazeApp));
-        add(saveButton = new MazeButton("Save to file", mazeApp));
-        add(editMaze = new MazeButton("Edit", mazeApp));
+        setLayout(new GridLayout(6,1));
+        add(createMaze = new CreateMaze(mazeApp));
+        add(loadMaze = new LoadMaze(mazeApp));
+        add(saveMaze = new SaveMaze(mazeApp));
+        add(editMaze = new EditMaze (mazeApp));
+        add(editEnable = new EditEnable(mazeApp));
         add(solveMaze = new MazeButton("Solve", mazeApp));
-        add(exitMaze = new MazeButton("Exit", mazeApp));
     }
 
 }

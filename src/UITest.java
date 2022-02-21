@@ -1,4 +1,4 @@
-package ui;
+import ui.*;
 
 public class UITest {
 
