@@ -11,16 +11,16 @@ public final class Pi extends Hashtable<VertexInterface, Integer> implements PiI
         this.g = g;
     }
 
-    public int getPi(VertexInterface v) {
+    public final int getPi(VertexInterface v) {
         return super.get(v).intValue();
     }
 
-    public void writePi(VertexInterface v, int x) {
+    public final void writePi(VertexInterface v, int x) {
         super.remove(v);
         super.put(v, new Integer(x));
     }
 
-    public void initializePi(VertexInterface v) {
+    public final void initializePi(VertexInterface v) {
         writePi(v, 0);
         for (VertexInterface v1 : g.getVerticies()) {
             if (v1 != v) {

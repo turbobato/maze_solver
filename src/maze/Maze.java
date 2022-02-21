@@ -6,7 +6,7 @@ import java.io.*;
 import dijkstra.GraphInterface;
 import dijkstra.VertexInterface;
 
-public class Maze implements GraphInterface {
+public final class Maze implements GraphInterface {
 
     private ArrayList<ArrayList<VertexInterface>> boxes;
     private int lines;
@@ -18,20 +18,24 @@ public class Maze implements GraphInterface {
         initFromTextFile(fileName);
     }
 
-    public Maze(int lines, int columns){
-        this.lines=lines;
-        this.columns=columns;
-        boxes = new ArrayList<ArrayList<VertexInterface>>(lines);
-            for (int i = 0; i < lines; i++) {
-                boxes.add(i, new ArrayList<VertexInterface>(columns)); 
+    public Maze(int lines, int columns) {
+        this.lines = lines;
+        this.columns = columns;
+        boxes = new ArrayList<ArrayList<VertexInterface>>();
+        for (int i = 0; i < lines; i++) {
+            boxes.add(i, new ArrayList<VertexInterface>());
+            for (int j = 0; j < columns; j++) {
+                addBox(i, j, new WBox(i, j, this));
             }
+        }
     }
 
     public final boolean isInMaze(int x, int y) { // regarde si la case d'indice (x,y) est dans le labyrinthe
         return ((x < lines) && (y < columns) && (x >= 0) && (y >= 0));
     }
 
-    public final VertexInterface getBox(int i, int j) throws MazeOutOfBoundsException { // renvoie la box en position (i, j)
+    public final VertexInterface getBox(int i, int j) throws MazeOutOfBoundsException { // renvoie la box en position
+                                                                                        // (i, j)
         if (isInMaze(i, j)) {
             return boxes.get(i).get(j);
         } else
@@ -40,7 +44,15 @@ public class Maze implements GraphInterface {
     }
 
     public final void setBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException { // change la box à la
-                                                                                            // position (i, j)
+        // position (i, j)
+        if (isInMaze(i, j)) {
+            boxes.get(i).set(j, box);
+        } else
+            throw new MazeOutOfBoundsException();
+    }
+
+    public final void addBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException { // ajoute une box à la
+        // position (i, j)
         if (isInMaze(i, j)) {
             boxes.get(i).add(j, box);
         } else
@@ -93,16 +105,8 @@ public class Maze implements GraphInterface {
         return lines * columns;
     }
 
-    public void resize(int lines, int columns){
-        
-        
-        setLines(lines);
-        setColumns(columns);
-
-    }
-
-    public int getWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut
-                                                                         // aller
+    public final int getWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut
+        // aller
         // d'une case à l'autre, +infty sinon)
         MBox b1 = (MBox) v1, b2 = (MBox) v2;
         if (b1.isNeighbour(b2)) {
@@ -156,44 +160,42 @@ public class Maze implements GraphInterface {
             while (temp != null) { // boucle qui lit le fichier ligne à ligne
                 lines++; // on incrémente le nombre de lignes
                 if (temp.length() != columns) { // on vérifie qu'il y a bien le même nombre de colonnes à chaque ligne
-                    throw new MazeReadingException(fileName, lines, "Le labyrinthe n'est pas rectangulaire");
+                    throw new MazeReadingException(fileName, lines, "Labyrinth is not rectangular");
                 }
                 temp = is.readLine(); // on passe à la ligne suivante
             }
+            boxes = new ArrayList<ArrayList<VertexInterface>>();
             setLines(lines); // on initialise le bon nombre
             setColumns(columns);
 
-            boxes = new ArrayList<ArrayList<VertexInterface>>(lines); // on initialise le labyrinthe à la bonne taille
-                                                                      // (ici le bon nombre de lignes)
-            for (int i = 0; i < lines; i++) {
-                boxes.add(i, new ArrayList<VertexInterface>(columns)); // on met le bon nombre de colonnes à chaque
-                                                                       // ligne
-            }
             is = new BufferedReader(new FileReader(fileName));
             int DCount = 0; // on va compter le nombre de D (il faut qu'il n'y en ait qu'un...)
             int ACount = 0; // pareil pour A
             for (int i = 0; i < lines; i++) {
+                boxes.add(i, new ArrayList<VertexInterface>());
                 String line = is.readLine();
                 for (int j = 0; j < columns; j++) {
                     char caractere = line.charAt(j);
                     if (caractere == 'D') {
                         if (DCount == 0) {
-                            setBox(i, j, new DBox(i, j, this));
+                            addBox(i, j, new DBox(i, j, this));
                             setDeparture(getBox(i, j)); // on récupère le départ
                             DCount++;
                         } else
-                            throw new MazeReadingException(fileName, i, "There is more than one departure"); // on a lu plus
-                                                                                                    // d'une fois le
-                                                                                                    // symbole D
+                            throw new MazeReadingException(fileName, i, "There is more than one departure"); // on a lu
+                                                                                                             // plus
+                        // d'une fois le
+                        // symbole D
                     } else if (caractere == 'A') {
                         if (ACount == 0) {
                             setBox(i, j, new ABox(i, j, this));
                             setArrival(getBox(i, j)); // on récupère l'arrivée
                             ACount++;
                         } else
-                            throw new MazeReadingException(fileName, i, "There is more than one arrival"); // on a lu plus
-                                                                                                      // d'une fois le
-                                                                                                      // symbole A
+                            throw new MazeReadingException(fileName, i, "There is more than one arrival"); // on a lu
+                                                                                                           // plus
+                        // d'une fois le
+                        // symbole A
                     } else if (caractere == 'W')
                         setBox(i, j, new WBox(i, j, this));
                     else if (caractere == 'E')
@@ -207,7 +209,7 @@ public class Maze implements GraphInterface {
             if (ACount != 1 || DCount != 1) { // il faut vérifier qu'on a lu exactement un départ et exactement une
                                               // arrivée
                 throw new MazeReadingException(fileName, lines,
-                        "THe files lacks a departure or an arrival");
+                        "The files lacks a departure or an arrival");
             }
         } catch (IOException e) {
             e.printStackTrace();

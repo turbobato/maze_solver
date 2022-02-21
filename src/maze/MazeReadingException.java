@@ -13,15 +13,15 @@ public final class MazeReadingException extends Exception {
         this.ErrorMessage = ErrorMessage;
     }
 
-    public String getFileName() {
+    public final String getFileName() {
         return fileName;
     }
 
-    public int getLine() {
+    public final int getLine() {
         return line;
     }
 
-    public String getErrorMessage() {
+    public final String getErrorMessage() {
         return ErrorMessage;
     }
 }

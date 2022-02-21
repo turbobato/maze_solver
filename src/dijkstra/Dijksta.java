@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public final class Dijksta {
 
-	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
+	public final static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
 		PiInterface pi = new Pi(g);
 		ASetInterface a = new ASet();
 		PreviousInterface previous = new Previous();
 		return dijkstra(g, r, a, pi, previous);
 	}
 
-	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi,
+	private final static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi,
 			PreviousInterface previous) {
 		a.addToSet(r);
 		VertexInterface pivot = r;
