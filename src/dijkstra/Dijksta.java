@@ -13,7 +13,7 @@ public final class Dijksta {
 
 	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi,
 			PreviousInterface previous) {
-		a.Add(r);
+		a.addToSet(r);
 		VertexInterface pivot = r;
 		pi.initializePi(r);
 		int j = 1;
@@ -39,7 +39,7 @@ public final class Dijksta {
 				}
 			}
 			pivot = next;
-			a.Add(pivot);
+			a.addToSet(pivot);
 			j++;
 		}
 		return previous;

@@ -8,7 +8,7 @@ public final class ASet extends HashSet<VertexInterface> implements ASetInterfac
         super();
     }
 
-    public void Add(VertexInterface v) {
+    public void addToSet(VertexInterface v) {
         super.add(v);
     }
 

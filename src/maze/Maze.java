@@ -14,15 +14,17 @@ public class Maze implements GraphInterface {
     private DBox departure;
     private ABox arrival;
 
-    public Maze() { // initialise un labyrinthe vide (pour plus tard l'initialiser avec un fichier
-                    // texte par exemple)
-        this.boxes = null;
-        lines = 0;
-        columns = 0;
-    }
-
     public Maze(String fileName) throws MazeReadingException { // initialise le labyrinthe à partir d'un fichier texte
         initFromTextFile(fileName);
+    }
+
+    public Maze(int lines, int columns){
+        this.lines=lines;
+        this.columns=columns;
+        boxes = new ArrayList<ArrayList<VertexInterface>>(lines);
+            for (int i = 0; i < lines; i++) {
+                boxes.add(i, new ArrayList<VertexInterface>(columns)); 
+            }
     }
 
     public final boolean isInMaze(int x, int y) { // regarde si la case d'indice (x,y) est dans le labyrinthe
@@ -91,7 +93,15 @@ public class Maze implements GraphInterface {
         return lines * columns;
     }
 
-    public final int getWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut
+    public void resize(int lines, int columns){
+        
+        
+        setLines(lines);
+        setColumns(columns);
+
+    }
+
+    public int getWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut
                                                                          // aller
         // d'une case à l'autre, +infty sinon)
         MBox b1 = (MBox) v1, b2 = (MBox) v2;

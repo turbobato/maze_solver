@@ -2,7 +2,7 @@ package ui;
 
 import javax.swing.*;
 
-public class MazeApp extends JFrame {
+public final class MazeApp extends JFrame {
 
     public MazeApp() {
         super("Maze Application");
