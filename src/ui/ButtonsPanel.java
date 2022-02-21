@@ -10,7 +10,7 @@ public final class ButtonsPanel extends JPanel {
     private final SaveMaze saveMaze;
     private final EditMaze editMaze;
     private final EditEnable editEnable;
-    private final MazeButton solveMaze;
+    private final JButton solveMaze;
 
     public ButtonsPanel(MazeApp mazeApp){
         super();
@@ -20,7 +20,7 @@ public final class ButtonsPanel extends JPanel {
         add(saveMaze = new SaveMaze(mazeApp));
         add(editMaze = new EditMaze (mazeApp));
         add(editEnable = new EditEnable(mazeApp));
-        add(solveMaze = new MazeButton("Solve", mazeApp));
+        add(solveMaze = new JButton());
     }
 
 }
