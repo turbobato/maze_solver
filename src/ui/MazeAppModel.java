@@ -11,19 +11,16 @@ public final class MazeAppModel {
 
     private Maze maze;
     private String currentEditionMode;
-    private boolean modified;
     private boolean editEnabled;
     private boolean displaySolution;
-    private ArrayList<ChangeListener> listeners 
-          = new ArrayList<ChangeListener>() ;
+    private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
     private boolean rebuildLabyrinth;
 
     public MazeAppModel() {
         maze = new Maze(10, 10);
         currentEditionMode = null;
-        modified = false;
         editEnabled = false;
-        displaySolution = false; 
+        displaySolution = false;
         rebuildLabyrinth = false;
     }
 
@@ -34,15 +31,6 @@ public final class MazeAppModel {
 
     public final Maze getMaze() {
         return maze;
-    }
-
-    public final void setModified(boolean modified) {
-        this.modified = modified;
-        stateChanges();
-    }
-
-    public final boolean getModified() {
-        return modified;
     }
 
     public final void setCurrentEditionMode(String currentEditionMode) {
@@ -59,60 +47,59 @@ public final class MazeAppModel {
         stateChanges();
     }
 
-    public final boolean getEditEnabled(){
+    public final boolean getEditEnabled() {
         return editEnabled;
     }
 
-    public final void setDisplaySolution(boolean displaySolution){
+    public final void setDisplaySolution(boolean displaySolution) {
         this.displaySolution = displaySolution;
         stateChanges();
     }
 
-    public final boolean getDisplaySolution(){
+    public final boolean getDisplaySolution() {
         return displaySolution;
     }
 
-    public final void setRebuildLabyrinth(boolean rebuildLabyrinth){
+    public final void setRebuildLabyrinth(boolean rebuildLabyrinth) {
         this.rebuildLabyrinth = rebuildLabyrinth;
         stateChanges();
     }
 
-    public final boolean getRebuildLabyrinth(){
+    public final boolean getRebuildLabyrinth() {
         return rebuildLabyrinth;
     }
 
-    public final void addObserver(ChangeListener listener){
+    public final void addObserver(ChangeListener listener) {
         listeners.add(listener);
     }
 
-    public final boolean isArrivalSet(){
-        return (maze.getArrival()!=null);
+    public final boolean isArrivalSet() {
+        return (maze.getArrival() != null);
     }
 
-    public final boolean isDepartureSet(){
-        return (maze.getDeparture()!=null);
+    public final boolean isDepartureSet() {
+        return (maze.getDeparture() != null);
     }
 
-    public final void setMazeDeparture(VertexInterface departure){
+    public final void setMazeDeparture(VertexInterface departure) {
         maze.setDeparture(departure);
         stateChanges();
     }
 
-    public final void setMazeArrival(VertexInterface arrival){
+    public final void setMazeArrival(VertexInterface arrival) {
         maze.setArrival(arrival);
         stateChanges();
     }
 
-    public final void setBox(int i, int j, VertexInterface box){
+    public final void setBox(int i, int j, VertexInterface box) {
         maze.setBox(i, j, box);
         stateChanges();
     }
 
     public final void stateChanges() {
-        ChangeEvent evt = new ChangeEvent(this) ;
+        ChangeEvent evt = new ChangeEvent(this);
         for (ChangeListener listener : listeners)
-		listener.stateChanged(evt);
+            listener.stateChanged(evt);
     }
-
 
 }
