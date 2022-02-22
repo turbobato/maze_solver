@@ -7,7 +7,7 @@ import maze.Maze;
 import java.awt.event.*;
 import java.io.File;
    
-public final class SaveMaze extends JButton implements ActionListener {
+public final class SaveMaze extends JButton implements ActionListener { //this works
 
     private final MazeApp mazeApp;
 
@@ -21,7 +21,7 @@ public final class SaveMaze extends JButton implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         MazeAppModel mazeAppModel = mazeApp.getModel();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fileChooser.showOpenDialog(this);
+        int result = fileChooser.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             String fileName = selectedFile.getPath();
@@ -30,6 +30,6 @@ public final class SaveMaze extends JButton implements ActionListener {
         }
     }
     public void notifyForUpdate(){
-        
+        setEnabled(!mazeApp.getModel().getDisplaySolution());
     }
 }

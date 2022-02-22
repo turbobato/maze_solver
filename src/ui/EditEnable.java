@@ -8,7 +8,7 @@ public final class EditEnable extends JButton implements ActionListener {
     
     private final MazeApp mazeApp;
 
-    public EditEnable(MazeApp mazeApp){
+    public EditEnable(MazeApp mazeApp){ //this one works 
         super("Enable edit mode");
         this.mazeApp = mazeApp;
         addActionListener(this);
@@ -30,6 +30,7 @@ public final class EditEnable extends JButton implements ActionListener {
         super.paintComponent(g);
     }
     public void notifyForUpdate(){
+        setEnabled(!mazeApp.getModel().getDisplaySolution());
         this.repaint();
     }
 }

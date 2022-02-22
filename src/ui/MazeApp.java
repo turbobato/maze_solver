@@ -14,9 +14,9 @@ public final class MazeApp extends JFrame implements ChangeListener {
     public MazeApp() {
         super("Maze Application");
         setIconImage(img.getImage());
+        mazeAppModel.addObserver(this);
         this.windowPanel= new WindowPanel(this);
         add(windowPanel);
-        mazeAppModel.addObserver(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);

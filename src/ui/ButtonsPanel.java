@@ -12,7 +12,7 @@ public final class ButtonsPanel extends JPanel {
     private final EditEnable editEnable;
     private final SolveMaze solveMaze;
 
-    public ButtonsPanel(MazeApp mazeApp){
+    public ButtonsPanel(MazeApp mazeApp){ //this one works
         super();
         setLayout(new GridLayout(6,1));
         add(createMaze = new CreateMaze(mazeApp));
@@ -21,15 +21,21 @@ public final class ButtonsPanel extends JPanel {
         add(editMaze = new EditMaze (mazeApp));
         add(editEnable = new EditEnable(mazeApp));
         add(solveMaze = new SolveMaze(mazeApp));
+        /*createMaze.setPreferredSize(new Dimension(200,100));
+        loadMaze.setPreferredSize(new Dimension(200,100));
+        saveMaze.setPreferredSize(new Dimension(200,100));
+        editMaze.setPreferredSize(new Dimension(200,100));
+        editEnable.setPreferredSize(new Dimension(200,100));
+        solveMaze.setPreferredSize(new Dimension(200,100));*/
     }
 
     public void notifyForUpdate(){
-    createMaze.notifyForUpdate();
-    loadMaze.notifyForUpdate();
-    saveMaze.notifyForUpdate();
-    editMaze.notifyForUpdate();
-    editEnable.notifyForUpdate();
-    solveMaze.notifyForUpdate();
+        createMaze.notifyForUpdate();
+        loadMaze.notifyForUpdate();
+        saveMaze.notifyForUpdate();
+        editMaze.notifyForUpdate();
+        editEnable.notifyForUpdate();
+        solveMaze.notifyForUpdate();
     }
 
 }

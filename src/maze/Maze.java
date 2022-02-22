@@ -188,7 +188,7 @@ public final class Maze implements GraphInterface {
                         // symbole D
                     } else if (caractere == 'A') {
                         if (ACount == 0) {
-                            setBox(i, j, new ABox(i, j, this));
+                            addBox(i, j, new ABox(i, j, this));
                             setArrival(getBox(i, j)); // on récupère l'arrivée
                             ACount++;
                         } else
@@ -197,9 +197,9 @@ public final class Maze implements GraphInterface {
                         // d'une fois le
                         // symbole A
                     } else if (caractere == 'W')
-                        setBox(i, j, new WBox(i, j, this));
+                        addBox(i, j, new WBox(i, j, this));
                     else if (caractere == 'E')
-                        setBox(i, j, new EBox(i, j, this));
+                        addBox(i, j, new EBox(i, j, this));
                     else {
                         throw new MazeReadingException(fileName, i,
                                 "An invalid character (different from A E D W) has been encountered");

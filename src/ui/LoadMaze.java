@@ -22,7 +22,7 @@ public final class LoadMaze extends JButton implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         MazeAppModel mazeAppModel = mazeApp.getModel();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fileChooser.showSaveDialog(this);
+        int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             String fileName = selectedFile.getPath();
@@ -38,6 +38,6 @@ public final class LoadMaze extends JButton implements ActionListener {
         }
     }
     public void notifyForUpdate(){
-        
+        setEnabled(!mazeApp.getModel().getDisplaySolution());
     }
 }

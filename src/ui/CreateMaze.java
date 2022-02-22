@@ -7,7 +7,7 @@ import maze.Maze;
 import java.awt.event.*;
 import java.awt.*;
 
-public final class CreateMaze extends JPanel {
+public final class CreateMaze extends JPanel { // this one works
 
     private final MazeApp mazeApp;
     private final JSpinner jSpinnerX = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
@@ -24,10 +24,14 @@ public final class CreateMaze extends JPanel {
         confirmCreation.setBackground(Color.GREEN);
         confirmCreation.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int x = ((Integer) jSpinnerX.getValue()).intValue();
-                int y = ((Integer) jSpinnerY.getValue()).intValue();
+                Integer x1 = (Integer) jSpinnerX.getValue();
+                Integer y1 = (Integer) jSpinnerY.getValue();
+                int x = x1.intValue();
+                int y = y1.intValue();
                 MazeAppModel mazeAppModel = mazeApp.getModel();
-                mazeAppModel.setMaze(new Maze(x, y));
+                mazeAppModel.setMaze(new Maze(x, y)); 
+                mazeAppModel.setDisplaySolution(false);
+                mazeAppModel.setEditEnabled(false);
             }
         });
         setLayout(new GridLayout(2, 3));
@@ -37,15 +41,8 @@ public final class CreateMaze extends JPanel {
         add(jSpinnerX);
         add(jSpinnerY);
         add(confirmCreation);
-        /*ImageIcon icon = new ImageIcon("data\\checkmark.png");
-        int offset = confirmCreation.getInsets().left;
-        Image img = icon.getImage();
-        Image resizedImage = img.getScaledInstance(confirmCreation.getWidth() - offset,
-                confirmCreation.getHeight() - offset, java.awt.Image.SCALE_SMOOTH);
-        icon = new ImageIcon(resizedImage);
-        confirmCreation.setIcon(icon);*/
     }
-    public void notifyForUpdate(){
-        
+
+    public void notifyForUpdate() {
     }
 }

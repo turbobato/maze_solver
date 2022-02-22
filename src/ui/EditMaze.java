@@ -3,7 +3,7 @@ package ui;
 import javax.swing.*;
 import java.awt.event.*;
 
-public final class EditMaze extends JButton implements ActionListener {
+public final class EditMaze extends JButton implements ActionListener { //works too
 
     private final MazeApp mazeApp;
     private final String[] optionsToChoose = { "Wall", "Empty", "Arrival", "Departure" };
@@ -19,7 +19,7 @@ public final class EditMaze extends JButton implements ActionListener {
         String editMode = (String) JOptionPane.showInputDialog(null,
             "Choose what you want to add", "Chose edit mode",
             JOptionPane.INFORMATION_MESSAGE, null,
-            optionsToChoose, optionsToChoose[0]);
+            optionsToChoose, mazeAppModel.getCurrentEditionMode());
         if (editMode != null){
             mazeAppModel.setCurrentEditionMode(editMode);
         }
