@@ -9,7 +9,7 @@ public class MainTestToutSaufUI {
 
     public static void main(String[] args) throws MazeReadingException {
 
-        Maze maze = new Maze("data/maze.txt");
+        Maze maze = new Maze("data/maze3.txt");
         DBox departure = (DBox) maze.getDeparture();
         ABox arrival = (ABox) maze.getArrival();
         PreviousInterface previous = Dijksta.dijkstra(maze, departure);
