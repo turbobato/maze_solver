@@ -17,6 +17,7 @@ public final class SolveMaze extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent evt){
         MazeAppModel mazeAppModel = mazeApp.getModel();
         mazeAppModel.setDisplaySolution(!mazeAppModel.getDisplaySolution());
+        mazeAppModel.setRebuildLabyrinth(!mazeAppModel.getDisplaySolution());
         mazeAppModel.setEditEnabled(false);
     }
     

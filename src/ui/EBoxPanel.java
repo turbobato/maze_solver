@@ -1,11 +1,12 @@
 package ui;
 
 import java.awt.Color;
+import maze.*;
 
 public final class EBoxPanel extends MBoxPanel {
 
-    public EBoxPanel(MazeApp mazeApp, int x, int y){
-        super(mazeApp, Color.WHITE, x, y);
+    public EBoxPanel(MazeApp mazeApp, MBox box){
+        super(mazeApp, Color.WHITE, box);
     }
     
 }

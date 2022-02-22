@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.event.*;
 
+import dijkstra.VertexInterface;
 import maze.Maze;
 
 public final class MazeAppModel {
@@ -15,6 +16,7 @@ public final class MazeAppModel {
     private boolean displaySolution;
     private ArrayList<ChangeListener> listeners 
           = new ArrayList<ChangeListener>() ;
+    private boolean rebuildLabyrinth;
 
     public MazeAppModel() {
         maze = new Maze(10, 10);
@@ -22,6 +24,7 @@ public final class MazeAppModel {
         modified = false;
         editEnabled = false;
         displaySolution = false; 
+        rebuildLabyrinth = false;
     }
 
     public final void setMaze(Maze maze) {
@@ -69,13 +72,47 @@ public final class MazeAppModel {
         return displaySolution;
     }
 
+    public final void setRebuildLabyrinth(boolean rebuildLabyrinth){
+        this.rebuildLabyrinth = rebuildLabyrinth;
+        stateChanges();
+    }
+
+    public final boolean getRebuildLabyrinth(){
+        return rebuildLabyrinth;
+    }
+
     public final void addObserver(ChangeListener listener){
         listeners.add(listener);
     }
 
-    public void stateChanges() {
+    public final boolean isArrivalSet(){
+        return (maze.getArrival()!=null);
+    }
+
+    public final boolean isDepartureSet(){
+        return (maze.getDeparture()!=null);
+    }
+
+    public final void setMazeDeparture(VertexInterface departure){
+        maze.setDeparture(departure);
+        stateChanges();
+    }
+
+    public final void setMazeArrival(VertexInterface arrival){
+        maze.setArrival(arrival);
+        stateChanges();
+    }
+
+    public final void setBox(int i, int j, VertexInterface box){
+        maze.setBox(i, j, box);
+        stateChanges();
+    }
+
+    public final void stateChanges() {
         ChangeEvent evt = new ChangeEvent(this) ;
         for (ChangeListener listener : listeners)
 		listener.stateChanged(evt);
     }
+
+
 }

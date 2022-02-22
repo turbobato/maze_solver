@@ -29,6 +29,7 @@ public final class LoadMaze extends JButton implements ActionListener {
             Maze maze = mazeAppModel.getMaze();
             try {
                 maze.initFromTextFile(fileName);
+                mazeAppModel.setRebuildLabyrinth(true);
             } catch (MazeReadingException e) {
                 JOptionPane.showMessageDialog(mazeApp,
                         e.getMessage(),

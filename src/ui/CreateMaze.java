@@ -10,8 +10,8 @@ import java.awt.*;
 public final class CreateMaze extends JPanel { // this one works
 
     private final MazeApp mazeApp;
-    private final JSpinner jSpinnerX = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
-    private final JSpinner jSpinnerY = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
+    private final JSpinner jSpinnerX = new JSpinner(new SpinnerNumberModel(10, 1, 30, 1));
+    private final JSpinner jSpinnerY = new JSpinner(new SpinnerNumberModel(10, 1, 30, 1));
     private final JLabel labelRows = new JLabel("Rows");
     private final JLabel labelColumns = new JLabel("Columns");
     private final JLabel labelConfirm = new JLabel("Confirm Creation");
@@ -32,6 +32,7 @@ public final class CreateMaze extends JPanel { // this one works
                 mazeAppModel.setMaze(new Maze(x, y)); 
                 mazeAppModel.setDisplaySolution(false);
                 mazeAppModel.setEditEnabled(false);
+                mazeAppModel.setRebuildLabyrinth(true);
             }
         });
         setLayout(new GridLayout(2, 3));
