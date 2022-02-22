@@ -37,4 +37,7 @@ public final class LoadMaze extends JButton implements ActionListener {
             }
         }
     }
+    public void notifyForUpdate(){
+        
+    }
 }

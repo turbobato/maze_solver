@@ -1,11 +1,10 @@
 package ui;
 
-import java.util.Observable;
-import java.util.Observer;
+import javax.swing.event.*;
 
 import javax.swing.*;
 
-public final class MazeApp extends JFrame implements Observer {
+public final class MazeApp extends JFrame implements ChangeListener {
 
     private final WindowPanel windowPanel;
     private final ImageIcon img = new ImageIcon("data\\icon.jpg");
@@ -17,6 +16,7 @@ public final class MazeApp extends JFrame implements Observer {
         setIconImage(img.getImage());
         this.windowPanel= new WindowPanel(this);
         add(windowPanel);
+        mazeAppModel.addObserver(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
@@ -30,12 +30,9 @@ public final class MazeApp extends JFrame implements Observer {
         return mazeAppModel;
     }
 
-    public final void update(Observable o, Object arg) {
-        notifyForUpdate();
-    }
-
-    public final void notifyForUpdate(){
+    public void stateChanged(ChangeEvent evt){
         windowPanel.notifyForUpdate();
     }
+
 
 }

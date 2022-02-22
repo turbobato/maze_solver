@@ -24,5 +24,7 @@ public final class EditMaze extends JButton implements ActionListener {
             mazeAppModel.setCurrentEditionMode(editMode);
         }
     }
-
+    public void notifyForUpdate(){
+        
+    }
 }

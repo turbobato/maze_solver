@@ -29,4 +29,7 @@ public final class SaveMaze extends JButton implements ActionListener {
             maze.saveToTextFile(fileName);
         }
     }
+    public void notifyForUpdate(){
+        
+    }
 }

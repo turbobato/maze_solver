@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 
 public final class EditEnable extends JButton implements ActionListener {
     
@@ -18,4 +19,17 @@ public final class EditEnable extends JButton implements ActionListener {
         mazeAppModel.setEditEnabled(!mazeAppModel.getEditEnabled());
     }
 
+    @Override protected void paintComponent(Graphics g){
+        MazeAppModel mazeAppModel = mazeApp.getModel();
+        if (mazeAppModel.getEditEnabled()){
+            setBackground(Color.GREEN);
+        }
+        else {
+            setBackground(Color.RED);
+        }
+        super.paintComponent(g);
+    }
+    public void notifyForUpdate(){
+        this.repaint();
+    }
 }
