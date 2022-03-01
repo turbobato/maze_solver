@@ -25,7 +25,7 @@ public final class Maze implements GraphInterface {
         for (int i = 0; i < lines; i++) {
             boxes.add(i, new ArrayList<VertexInterface>());
             for (int j = 0; j < columns; j++) {
-                addBox(i, j, new WBox(i, j, this));
+                addBox(i, j, new EBox(i, j, this));
             }
         }
     }

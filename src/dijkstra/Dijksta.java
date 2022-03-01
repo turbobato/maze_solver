@@ -35,6 +35,7 @@ public final class Dijksta {
 				if (!a.isInSet(v)) {
 					if (pi.getPi(v) < min) {
 						next = v;
+						min = pi.getPi(v);
 					}
 				}
 			}
