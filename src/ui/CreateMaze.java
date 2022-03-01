@@ -29,9 +29,9 @@ public final class CreateMaze extends JPanel { // this one works
                 int x = x1.intValue();
                 int y = y1.intValue();
                 MazeAppModel mazeAppModel = mazeApp.getModel();
-                mazeAppModel.setMaze(new Maze(x, y)); 
                 mazeAppModel.setDisplaySolution(false);
                 mazeAppModel.setEditEnabled(false);
+                mazeAppModel.setMaze(new Maze(x, y)); 
                 mazeAppModel.setRebuildLabyrinth(true);
             }
         });
