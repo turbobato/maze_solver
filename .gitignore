@@ -2,7 +2,6 @@
 .idea/
 .settings/
 bin/
-tp4.iml
+*.iml
 .project
-src/.vscode
-.vscode
+*.vscode
