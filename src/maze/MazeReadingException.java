@@ -1,5 +1,8 @@
 package maze;
 
+/* This class is a custom type of Exception used when there is an issue while reading mazes from files,
+for instance there is more than one arrival, the maze is not rectangular, etc*/
+
 public final class MazeReadingException extends Exception {
 
     private final String fileName;

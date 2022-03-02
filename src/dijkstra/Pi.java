@@ -2,9 +2,14 @@ package dijkstra;
 
 import java.util.Hashtable;
 
+/* This class just implements the interface PiInterface, using HashTables. 
+See the interface PiInterface for further explanation on what the methods do.
+We use super methods for implementing the methods needed.
+*/
+
 public final class Pi extends Hashtable<VertexInterface, Integer> implements PiInterface {
 
-    private final GraphInterface g; // La fonction pi est associée à un graphe
+    private final GraphInterface g;
 
     public Pi(GraphInterface g) {
         super();
@@ -21,10 +26,10 @@ public final class Pi extends Hashtable<VertexInterface, Integer> implements PiI
     }
 
     public final void initializePi(VertexInterface v) {
-        writePi(v, 0);
+        writePi(v, 0); //the departure gets its value initalized at 0
         for (VertexInterface v1 : g.getVerticies()) {
             if (v1 != v) {
-                writePi(v1, Integer.MAX_VALUE);
+                writePi(v1, Integer.MAX_VALUE); //Integer.MAX_VALUE represents + infinity
             }
         }
     }

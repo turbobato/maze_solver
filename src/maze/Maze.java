@@ -6,18 +6,24 @@ import java.io.*;
 import dijkstra.GraphInterface;
 import dijkstra.VertexInterface;
 
+/* This class implements the GraphInterface and describes the maze used in our MazeApplication,
+which is composed of a grid of boxes of type VertexInterface */
+
 public final class Maze implements GraphInterface {
 
-    private ArrayList<ArrayList<VertexInterface>> boxes;
+    private ArrayList<ArrayList<VertexInterface>> boxes; // the matrix of boxes is described by an ArrayList of
+                                                         // ArrayList
     private int lines;
     private int columns;
     private DBox departure;
     private ABox arrival;
 
-    public Maze(String fileName) throws MazeReadingException { // initialise le labyrinthe à partir d'un fichier texte
+    // initializes the maze from a text file
+    public Maze(String fileName) throws MazeReadingException {
         initFromTextFile(fileName);
     }
 
+    // initializes a maze of size lines * columns, with only EBoxes
     public Maze(int lines, int columns) {
         this.lines = lines;
         this.columns = columns;
@@ -30,12 +36,14 @@ public final class Maze implements GraphInterface {
         }
     }
 
-    public final boolean isInMaze(int x, int y) { // regarde si la case d'indice (x,y) est dans le labyrinthe
+    // tests whether the box (x, y) is within the boundaries of the maze
+    private final boolean isInMaze(int x, int y) {
         return ((x < lines) && (y < columns) && (x >= 0) && (y >= 0));
     }
 
-    public final VertexInterface getBox(int i, int j) throws MazeOutOfBoundsException { // renvoie la box en position
-                                                                                        // (i, j)
+    // returns the box in position (i, j), throwing a MazeOutOfBoundsException if
+    // (i, j) is out of the boundaries of the maze
+    public final VertexInterface getBox(int i, int j) throws MazeOutOfBoundsException {
         if (isInMaze(i, j)) {
             return boxes.get(i).get(j);
         } else
@@ -43,55 +51,59 @@ public final class Maze implements GraphInterface {
 
     }
 
-    public final void setBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException { // change la box à la
-        // position (i, j)
+    // changes the box in position (i, j), throwing a MazeOutOfBoundsException if
+    // (i, j) is out of the boundaries of the maze
+    public final void setBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException {
         if (isInMaze(i, j)) {
             boxes.get(i).set(j, box);
         } else
             throw new MazeOutOfBoundsException();
     }
 
-    public final void addBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException { // ajoute une box à la
-        // position (i, j)
+    // adds a new box to position (i, j) throwing a MazeOutOfBoundsException if (i,
+    // j) is out of the boundaries of the maze. Only to be used if there was nothing
+    // in position (i, j previously) !!!
+    public final void addBox(int i, int j, VertexInterface box) throws MazeOutOfBoundsException {
         if (isInMaze(i, j)) {
             boxes.get(i).add(j, box);
         } else
             throw new MazeOutOfBoundsException();
     }
 
-    public final int getLines() { // renvoie le nombre de lignes
+    public final int getLines() {
         return lines;
     }
 
-    public final void setLines(int lines) { // change la valeur du nombre de lignes
+    public final void setLines(int lines) {
         this.lines = lines;
     }
 
-    public final int getColumns() { // renvoie le nombre de colonnes
+    public final int getColumns() {
         return columns;
     }
 
-    public final void setColumns(int columns) { // change la valeur du nombre de colonnes
+    public final void setColumns(int columns) {
         this.columns = columns;
     }
 
-    public final VertexInterface getDeparture() { // renvoie la case départ
+    public final VertexInterface getDeparture() {
         return departure;
     }
 
-    public final VertexInterface getArrival() { // renvoie la case arrivée
+    public final VertexInterface getArrival() {
         return arrival;
     }
 
-    public final void setDeparture(VertexInterface departure) { // change la case départ
+    public final void setDeparture(VertexInterface departure) {
         this.departure = (DBox) departure;
     }
 
-    public final void setArrival(VertexInterface arrival) { // change la case arrivée
+    public final void setArrival(VertexInterface arrival) {
         this.arrival = (ABox) arrival;
     }
 
-    public final ArrayList<VertexInterface> getVerticies() { // renvoie la liste de toutes les boxes
+    // returns the list of all boxes
+    public final ArrayList<VertexInterface> getVerticies() {
         ArrayList<VertexInterface> allVerticies = new ArrayList<VertexInterface>();
         for (int i = 0; i < getLines(); i++) {
             for (int j = 0; j < getColumns(); j++) {
@@ -101,45 +113,47 @@ public final class Maze implements GraphInterface {
         return allVerticies;
     }
 
-    public final int getCount() { // renvoie le nombre de cases dans le labyrinthe
+    // returns the number of boxes in the maze
+    public final int getCount() {
         return lines * columns;
     }
 
-    public final int getWeight(VertexInterface v1, VertexInterface v2) { // renvoie le poids d'une arrête (1 si on peut
-        // aller
-        // d'une case à l'autre, +infty sinon)
-        MBox b1 = (MBox) v1, b2 = (MBox) v2;
-        if (b1.isNeighbour(b2)) {
+    // returns the weight between two boxes (1 if it is possible to go from v1 to
+    // v2, else +infinity)
+    public final int getWeight(VertexInterface v1, VertexInterface v2) {
+        if (v1.isNeighbour(v2)) {
             return 1;
         } else {
-            return Integer.MAX_VALUE;
+            return Integer.MAX_VALUE; // Integer.MAX_VALUE represents +infinity
         }
     }
 
-    public final ArrayList<VertexInterface> neighbours(VertexInterface v) { // renvoie la liste des voisins de v
+    // returns the list of neighbours of v, by testing if the adjacent boxes are in
+    // the maze, and if they are not walls
+    public final ArrayList<VertexInterface> neighbours(VertexInterface v) {
         MBox b = (MBox) v;
         int x = b.getX(), y = b.getY();
         ArrayList<VertexInterface> result = new ArrayList<VertexInterface>();
         if (isInMaze(x - 1, y)) {
-            MBox candidate = (MBox) getBox(x - 1, y); // potentiel voisin, reste à vérifier s'il est un mur
+            MBox candidate = (MBox) getBox(x - 1, y);
             if (!candidate.isWall()) {
                 result.add(candidate);
             }
         }
         if (isInMaze(x + 1, y)) {
-            MBox candidate = (MBox) getBox(x + 1, y); // potentiel voisin, reste à vérifier s'il est un mur
+            MBox candidate = (MBox) getBox(x + 1, y);
             if (!candidate.isWall()) {
                 result.add(candidate);
             }
         }
         if (isInMaze(x, y - 1)) {
-            MBox candidate = (MBox) getBox(x, y - 1); // potentiel voisin, reste à vérifier s'il est un mur
+            MBox candidate = (MBox) getBox(x, y - 1);
             if (!candidate.isWall()) {
                 result.add(candidate);
             }
         }
         if (isInMaze(x, y + 1)) {
-            MBox candidate = (MBox) getBox(x, y + 1); // potentiel voisin, reste à vérifier s'il est un mur
+            MBox candidate = (MBox) getBox(x, y + 1);
             if (!candidate.isWall()) {
                 result.add(candidate);
             }
@@ -147,55 +161,50 @@ public final class Maze implements GraphInterface {
         return result;
     }
 
+    // initializes the maze using a text file at location fileName
     public final void initFromTextFile(String fileName)
             throws MazeReadingException {
         BufferedReader is = null;
         try {
             is = new BufferedReader(new FileReader(fileName));
-            int columns = is.readLine().length(); // on récupère le nombre de caractères dans la première ligne du
-                                                  // fichier test (qui devra correspondre au nombre de colonnes)
-            int lines = 1; // on initialise le nombre de lignes à 1 car on a déjà lu la première ligne avec
-                           // l'instruction précédente
+            int columns = is.readLine().length(); // the number of columns is the length of the first line
+            int lines = 1; // we have already read a line, so lines starts at one
             String temp = is.readLine();
-            while (temp != null) { // boucle qui lit le fichier ligne à ligne
-                lines++; // on incrémente le nombre de lignes
-                if (temp.length() != columns) { // on vérifie qu'il y a bien le même nombre de colonnes à chaque ligne
+            while (temp != null) { // loop for reading the file line by line
+                lines++;
+                if (temp.length() != columns) { // test that all lines have the same length
                     throw new MazeReadingException(fileName, lines, "Labyrinth is not rectangular");
                 }
-                temp = is.readLine(); // on passe à la ligne suivante
+                temp = is.readLine();
             }
+            
             boxes = new ArrayList<ArrayList<VertexInterface>>();
-            setLines(lines); // on initialise le bon nombre
+            setLines(lines);
             setColumns(columns);
 
-            is = new BufferedReader(new FileReader(fileName));
-            int DCount = 0; // on va compter le nombre de D (il faut qu'il n'y en ait qu'un...)
-            int ACount = 0; // pareil pour A
+            is = new BufferedReader(new FileReader(fileName)); // we start a new BufferedReader to go trough the text
+                                                               // file one again
+            int DCount = 0; // we will count the number of D characters (there must be only one)
+            int ACount = 0; // same for A
             for (int i = 0; i < lines; i++) {
                 boxes.add(i, new ArrayList<VertexInterface>());
                 String line = is.readLine();
                 for (int j = 0; j < columns; j++) {
                     char caractere = line.charAt(j);
                     if (caractere == 'D') {
-                        if (DCount == 0) {
+                        if (DCount == 0) { // test that D has been read only once
                             addBox(i, j, new DBox(i, j, this));
-                            setDeparture(getBox(i, j)); // on récupère le départ
+                            setDeparture(getBox(i, j));
                             DCount++;
                         } else
-                            throw new MazeReadingException(fileName, i, "There is more than one departure"); // on a lu
-                                                                                                             // plus
-                        // d'une fois le
-                        // symbole D
-                    } else if (caractere == 'A') {
+                            throw new MazeReadingException(fileName, i, "There is more than one departure");
+                    } else if (caractere == 'A') { // test that A has been read only once
                         if (ACount == 0) {
                             addBox(i, j, new ABox(i, j, this));
-                            setArrival(getBox(i, j)); // on récupère l'arrivée
+                            setArrival(getBox(i, j));
                             ACount++;
                         } else
-                            throw new MazeReadingException(fileName, i, "There is more than one arrival"); // on a lu
-                                                                                                           // plus
-                        // d'une fois le
-                        // symbole A
+                            throw new MazeReadingException(fileName, i, "There is more than one arrival");
                     } else if (caractere == 'W')
                         addBox(i, j, new WBox(i, j, this));
                     else if (caractere == 'E')
@@ -206,11 +215,11 @@ public final class Maze implements GraphInterface {
                     }
                 }
             }
-            if (ACount != 1 || DCount != 1) { // il faut vérifier qu'on a lu exactement un départ et exactement une
-                                              // arrivée
+            if (ACount != 1 || DCount != 1) { // test that we have one arrival and one departure
                 throw new MazeReadingException(fileName, lines,
                         "The files lacks a departure or an arrival");
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -223,6 +232,7 @@ public final class Maze implements GraphInterface {
         }
     }
 
+    // saves a maze to a text file at location fileName
     public final void saveToTextFile(String fileName) {
         PrintWriter pw = null;
         try {
@@ -239,8 +249,8 @@ public final class Maze implements GraphInterface {
             e.printStackTrace();
         } finally {
             if (pw != null)
-                pw.close(); // pas besoin de try catch car selon la documentation de printwriter, les
-                            // méthodes ne throw pas d'exception (par contre les constructeurs le peuvent)
+                pw.close(); // no need to do a try catch, the documentation specifies that pw.close()
+                            // doesn't throw exceptions
         }
 
     }

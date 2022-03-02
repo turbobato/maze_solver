@@ -1,5 +1,10 @@
 package maze;
 
+import dijkstra.VertexInterface;
+
+/* This abstract class implements the methods needed for the boxes in our maze app, 
+implementing the interface VertexInterface */
+
 public abstract class MBox implements dijkstra.VertexInterface {
 
     private final int x;
@@ -26,11 +31,13 @@ public abstract class MBox implements dijkstra.VertexInterface {
         return label;
     }
 
+    // method to be overriden in the WBox class, by default a box is not a wall
     public boolean isWall() {
         return false;
     }
 
-    public final boolean isNeighbour(MBox b) { // renvoie true si b est un voisin direct, false sinon
+    // tests if two boxes are neighbours in the maze, which means they are directly adjacent and none of them is a wall
+    public final boolean isNeighbour(VertexInterface b) { 
         return (maze.neighbours(this).contains(b));
     }
 }
