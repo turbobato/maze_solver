@@ -14,13 +14,13 @@ public final class CreateMaze extends JPanel { // this one works
     private final JSpinner jSpinnerY = new JSpinner(new SpinnerNumberModel(10, 1, 30, 1));
     private final JLabel labelRows = new JLabel("Rows");
     private final JLabel labelColumns = new JLabel("Columns");
-    private final JLabel labelConfirm = new JLabel("Confirm Creation");
+    private final JLabel labelConfirm = new JLabel("Create");
     private final JButton confirmCreation;
 
     public CreateMaze(MazeApp mazeApp) {
         super();
         this.mazeApp = mazeApp;
-        confirmCreation = new JButton("Confirm");
+        confirmCreation = new JButton("Create");
         confirmCreation.setBackground(Color.GREEN);
         confirmCreation.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

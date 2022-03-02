@@ -21,12 +21,6 @@ public final class ButtonsPanel extends JPanel {
         add(editMaze = new EditMaze (mazeApp));
         add(editEnable = new EditEnable(mazeApp));
         add(solveMaze = new SolveMaze(mazeApp));
-        /*createMaze.setPreferredSize(new Dimension(200,100));
-        loadMaze.setPreferredSize(new Dimension(200,100));
-        saveMaze.setPreferredSize(new Dimension(200,100));
-        editMaze.setPreferredSize(new Dimension(200,100));
-        editEnable.setPreferredSize(new Dimension(200,100));
-        solveMaze.setPreferredSize(new Dimension(200,100));*/
     }
 
     public void notifyForUpdate(){
