@@ -32,7 +32,7 @@ public final class CreateMaze extends JPanel {
         this.mazeApp = mazeApp;
         confirmCreation = new JButton("Create");
         confirmCreation.setBackground(Color.GREEN);
-        confirmCreation.addActionListener(new ActionListener() { // use of abstract classes to create a new action
+        confirmCreation.addActionListener(new ActionListener() { // use of anonym classes to create a new action
                                                                  // listener
             public void actionPerformed(ActionEvent e) {
                 Integer x1 = (Integer) jSpinnerX.getValue();
