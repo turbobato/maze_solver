@@ -3,6 +3,10 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
+/* This class extends the JPanel class to describe the right panel of the UI,
+which contains all the buttons. To see what each button does, see the classes
+named after each button.*/
+
 public final class ButtonsPanel extends JPanel {
     
     private final CreateMaze createMaze;
@@ -12,7 +16,7 @@ public final class ButtonsPanel extends JPanel {
     private final EditEnable editEnable;
     private final SolveMaze solveMaze;
 
-    public ButtonsPanel(MazeApp mazeApp){ //this one works
+    public ButtonsPanel(MazeApp mazeApp){ 
         super();
         setLayout(new GridLayout(6,1));
         add(createMaze = new CreateMaze(mazeApp));
@@ -23,6 +27,7 @@ public final class ButtonsPanel extends JPanel {
         add(solveMaze = new SolveMaze(mazeApp));
     }
 
+    // called whenever the model is modified, to update the view
     public void notifyForUpdate(){
         createMaze.notifyForUpdate();
         loadMaze.notifyForUpdate();
